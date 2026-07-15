@@ -156,6 +156,8 @@ h1 { max-width: 700px; font-size: clamp(48px, 6.2vw, 84px); line-height: .99; le
 .project-data { margin-top: auto; padding-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid var(--line); }
 .project-data small { display: block; color: var(--muted); font: 400 7px var(--font-mono); letter-spacing: .12em; }
 .project-data strong { display: block; margin-top: 4px; color: #cbd7ea; font-size: 11px; }
+.absensi-project { margin-top: 18px; }
+.absensi-visual img { object-position: center; }
 .project-stack { margin-top: 18px; padding: 30px; display: grid; grid-template-columns: .55fr 1.45fr; align-items: center; gap: 30px; border: 1px solid var(--line); background: rgba(7,16,31,.7); }
 .stack-flow { display: flex; align-items: center; justify-content: space-between; gap: 9px; }
 .stack-flow > div { flex: 1; min-height: 92px; padding: 14px; border: 1px solid var(--line); background: rgba(63,140,255,.035); }
