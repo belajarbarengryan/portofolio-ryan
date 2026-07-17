@@ -79,6 +79,46 @@ if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
   });
 }
 
+document.querySelectorAll('[data-gallery]').forEach((gallery) => {
+  const images = [...gallery.querySelectorAll('.gallery-image')];
+  const controls = [...gallery.querySelectorAll('[data-slide]')];
+  let currentSlide = 0;
+  let autoplay;
+
+  function showSlide(index) {
+    currentSlide = index;
+    images.forEach((image, imageIndex) => {
+      image.classList.toggle('active', imageIndex === index);
+    });
+    controls.forEach((control, controlIndex) => {
+      const isActive = controlIndex === index;
+      control.classList.toggle('active', isActive);
+      control.setAttribute('aria-pressed', String(isActive));
+    });
+  }
+
+  function startAutoplay() {
+    if (prefersReducedMotion) return;
+    window.clearInterval(autoplay);
+    autoplay = window.setInterval(() => {
+      showSlide((currentSlide + 1) % images.length);
+    }, 5200);
+  }
+
+  controls.forEach((control, index) => {
+    control.addEventListener('click', () => {
+      showSlide(index);
+      startAutoplay();
+    });
+  });
+
+  gallery.addEventListener('pointerenter', () => window.clearInterval(autoplay));
+  gallery.addEventListener('pointerleave', startAutoplay);
+  gallery.addEventListener('focusin', () => window.clearInterval(autoplay));
+  gallery.addEventListener('focusout', startAutoplay);
+  startAutoplay();
+});
+
 const copyButton = document.querySelector('.copy-email');
 const toast = document.querySelector('.toast');
 
