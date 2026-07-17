@@ -72,6 +72,16 @@ if (techShowcase && window.matchMedia('(pointer: fine)').matches) {
   });
 }
 
+document.querySelectorAll('.interactive-panel').forEach((panel) => {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  panel.addEventListener('pointermove', (event) => {
+    const bounds = panel.getBoundingClientRect();
+    panel.style.setProperty('--panel-x', `${event.clientX - bounds.left}px`);
+    panel.style.setProperty('--panel-y', `${event.clientY - bounds.top}px`);
+  });
+});
+
 if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
   document.querySelectorAll('.project-visual').forEach((visual) => {
     visual.addEventListener('pointermove', (event) => {
