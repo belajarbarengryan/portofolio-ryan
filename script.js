@@ -62,6 +62,16 @@ const sectionObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('main section[id]').forEach((section) => sectionObserver.observe(section));
 
+const techShowcase = document.querySelector('.tech-showcase');
+
+if (techShowcase && window.matchMedia('(pointer: fine)').matches) {
+  techShowcase.addEventListener('pointermove', (event) => {
+    const bounds = techShowcase.getBoundingClientRect();
+    techShowcase.style.setProperty('--tech-x', `${event.clientX - bounds.left}px`);
+    techShowcase.style.setProperty('--tech-y', `${event.clientY - bounds.top}px`);
+  });
+}
+
 if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
   document.querySelectorAll('.project-visual').forEach((visual) => {
     visual.addEventListener('pointermove', (event) => {
