@@ -63,6 +63,32 @@ const sectionObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('main section[id]').forEach((section) => sectionObserver.observe(section));
 
 if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+  document.querySelectorAll('.project-visual').forEach((visual) => {
+    visual.addEventListener('pointermove', (event) => {
+      const bounds = visual.getBoundingClientRect();
+      const x = event.clientX - bounds.left;
+      const y = event.clientY - bounds.top;
+      const xPercent = (x / bounds.width) * 100;
+      const yPercent = (y / bounds.height) * 100;
+      const shadowX = ((x / bounds.width) - 0.5) * 18;
+      const shadowY = ((y / bounds.height) - 0.5) * 18;
+
+      visual.style.setProperty('--cursor-x', `${xPercent}%`);
+      visual.style.setProperty('--cursor-y', `${yPercent}%`);
+      visual.style.setProperty('--shadow-x', `${shadowX}px`);
+      visual.style.setProperty('--shadow-y', `${shadowY}px`);
+      visual.style.setProperty('--shadow-strength', '.24');
+      visual.classList.add('cursor-shadow');
+    });
+
+    visual.addEventListener('pointerleave', () => {
+      visual.style.setProperty('--shadow-strength', '0');
+      visual.classList.remove('cursor-shadow');
+    });
+  });
+}
+
+if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
   document.querySelectorAll('.hero-console, .skill-card, .roadmap-card').forEach((card) => {
     card.classList.add('tilt-card');
 
