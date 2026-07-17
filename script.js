@@ -82,6 +82,16 @@ document.querySelectorAll('.interactive-panel').forEach((panel) => {
   });
 });
 
+document.querySelectorAll('.capability-card').forEach((card) => {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  card.addEventListener('pointermove', (event) => {
+    const bounds = card.getBoundingClientRect();
+    card.style.setProperty('--cap-x', `${event.clientX - bounds.left}px`);
+    card.style.setProperty('--cap-y', `${event.clientY - bounds.top}px`);
+  });
+});
+
 if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
   document.querySelectorAll('.project-visual').forEach((visual) => {
     visual.addEventListener('pointermove', (event) => {

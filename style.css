@@ -203,17 +203,27 @@ h1 { max-width: 700px; font-size: clamp(48px, 6.2vw, 84px); line-height: .99; le
 .path-line { position: relative; z-index: 1; width: 2px; height: 30px; overflow: hidden; margin: 2px 0 2px 30px; background: rgba(63,140,255,.16); }
 .path-line::after { content: ""; position: absolute; inset: -100% 0 auto; height: 60%; background: linear-gradient(transparent, var(--cyan), transparent); animation: pathSignal 2.1s linear infinite; }
 .skill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.skill-card { position: relative; min-height: 285px; overflow: hidden; padding: 28px; border: 1px solid var(--line); background: linear-gradient(145deg, rgba(12,25,48,.82), rgba(5,11,23,.76)); transition: transform .25s, border-color .25s; }
-.skill-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, var(--blue), var(--cyan), transparent 72%); }
+.skill-card { position: relative; min-height: 310px; overflow: hidden; padding: 28px; border: 1px solid var(--line); background: radial-gradient(circle at var(--cap-x,50%) var(--cap-y,50%), rgba(48,137,255,.16), transparent 34%), linear-gradient(145deg, rgba(12,25,48,.88), rgba(5,11,23,.82)); transition: transform .25s, border-color .25s, box-shadow .25s; }
+.skill-card::before { content: ""; position: absolute; top: 0; left: -35%; width: 55%; height: 2px; background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), transparent); animation: cardScan 3.4s linear infinite; }
 .skill-card:nth-child(2)::before { background: linear-gradient(90deg, var(--cyan), var(--green), transparent 72%); }
 .skill-card:nth-child(3)::before { background: linear-gradient(90deg, var(--violet), var(--blue), transparent 72%); }
-.skill-card:hover { transform: translateY(-5px); border-color: rgba(63,140,255,.5); }
-.skill-icon { width: 44px; height: 44px; display: grid; place-items: center; margin-bottom: 40px; border: 1px solid rgba(57,217,255,.28); color: var(--cyan); background: rgba(57,217,255,.05); font-size: 22px; }
+.skill-card:hover { transform: translateY(-7px); border-color: rgba(63,140,255,.58); box-shadow: 0 24px 52px rgba(17,82,180,.2); }
+.capability-card::after { content: attr(data-label); position: absolute; right: -8px; bottom: 18px; color: rgba(83,145,255,.038); font: 700 46px var(--font-mono); letter-spacing: -.08em; pointer-events: none; transition: color .25s, transform .25s; }
+.capability-card:hover::after { color: rgba(83,145,255,.075); transform: translateX(-8px); }
+.capability-card > * { position: relative; z-index: 1; }
+.skill-icon { width: 48px; height: 48px; display: grid; place-items: center; margin-bottom: 16px; border: 1px solid rgba(57,217,255,.28); color: var(--cyan); background: rgba(57,217,255,.05); font-size: 22px; transition: transform .25s, box-shadow .25s; }
+.skill-icon img { width: 28px; height: 28px; object-fit: contain; filter: drop-shadow(0 7px 10px rgba(0,0,0,.28)); }
+.skill-card:hover .skill-icon { transform: translateY(-3px) rotate(-3deg); box-shadow: 0 0 24px rgba(57,217,255,.17); }
 .card-number { position: absolute; top: 25px; right: 25px; color: #45526a; font: 700 11px var(--font-mono); }
+.capability-status { width: fit-content; margin-bottom: 25px; color: #7d91ad; font: 700 7px var(--font-mono); letter-spacing: .12em; }
+.capability-status i { display: inline-block; width: 6px; height: 6px; margin-right: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); animation: statusPulse 1.6s ease-in-out infinite; }
+.skill-card:nth-child(2) .capability-status i { background: var(--green); box-shadow: 0 0 10px var(--green); }
+.skill-card:nth-child(3) .capability-status i { background: var(--violet); box-shadow: 0 0 10px var(--violet); }
 .skill-card h3 { margin-bottom: 10px; font-size: 19px; }
 .skill-card p { color: var(--muted); font-size: 14px; }
 .level { position: absolute; left: 28px; right: 28px; bottom: 24px; height: 2px; background: #172237; }
-.level span { display: block; width: var(--level); height: 100%; background: linear-gradient(90deg, var(--blue), var(--cyan)); box-shadow: 0 0 10px var(--blue); }
+.level span { position: relative; display: block; width: var(--level); height: 100%; overflow: hidden; background: linear-gradient(90deg, var(--blue), var(--cyan)); box-shadow: 0 0 10px var(--blue); }
+.level span::after { content: ""; position: absolute; top: 0; left: -25%; width: 22%; height: 100%; background: white; box-shadow: 0 0 8px white; animation: levelScan 2.4s linear infinite; }
 .tool-label { color: var(--blue); font: 700 8px var(--font-mono); letter-spacing: .15em; }
 .project-stack h3, .roadmap-heading h3 { margin-top: 8px; font-size: 20px; }
 .tech-showcase { position: relative; overflow: hidden; margin-top: 18px; padding: clamp(26px,4vw,52px); border: 1px solid rgba(63,140,255,.24); background: radial-gradient(circle at var(--tech-x,50%) var(--tech-y,50%), rgba(44,140,255,.14), transparent 28%), linear-gradient(145deg, rgba(10,25,51,.9), rgba(3,8,18,.94)); box-shadow: inset 0 1px rgba(255,255,255,.035), 0 30px 80px rgba(0,30,90,.16); }
@@ -334,6 +344,9 @@ footer a { text-decoration: none; } .footer-status { color: var(--green); }
 @keyframes arrowSignal {
   to { transform: translateX(4px); opacity: .55; }
 }
+@keyframes cardScan { to { transform: translateX(270%); } }
+@keyframes statusPulse { 50% { opacity: .3; transform: scale(.7); } }
+@keyframes levelScan { to { transform: translateX(570%); } }
 @keyframes consoleFloat {
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -9px; }
