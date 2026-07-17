@@ -202,6 +202,33 @@ h1 { max-width: 700px; font-size: clamp(48px, 6.2vw, 84px); line-height: .99; le
 .path-item.active > span { color: var(--green); border-color: rgba(107,234,154,.5); box-shadow: inset 0 0 15px rgba(107,234,154,.08), 0 0 16px rgba(107,234,154,.1); animation: currentPulse 2.6s ease-in-out infinite; }
 .path-line { position: relative; z-index: 1; width: 2px; height: 30px; overflow: hidden; margin: 2px 0 2px 30px; background: rgba(63,140,255,.16); }
 .path-line::after { content: ""; position: absolute; inset: -100% 0 auto; height: 60%; background: linear-gradient(transparent, var(--cyan), transparent); animation: pathSignal 2.1s linear infinite; }
+.experience-feature { position: relative; display: grid; grid-template-columns: 78px 1fr; gap: 30px; overflow: hidden; margin-bottom: 22px; padding: 34px; border: 1px solid var(--line); background: radial-gradient(circle at var(--panel-x,50%) var(--panel-y,50%), rgba(57,217,255,.13), transparent 31%), linear-gradient(135deg, rgba(10,27,54,.95), rgba(4,12,27,.92)); box-shadow: inset 0 1px rgba(255,255,255,.025); transition: border-color .25s, box-shadow .25s, transform .25s; }
+.experience-feature:hover { transform: translateY(-3px); border-color: rgba(57,217,255,.42); box-shadow: 0 25px 65px rgba(8,73,160,.18), inset 0 1px rgba(255,255,255,.04); }
+.experience-feature::before { content: "DIGITAL NUSANTARA"; position: absolute; right: -12px; bottom: -22px; color: rgba(63,140,255,.035); font: 700 clamp(42px,7vw,94px) var(--font-mono); letter-spacing: -.08em; white-space: nowrap; pointer-events: none; }
+.experience-feature::after { content: ""; position: absolute; top: 0; left: -28%; width: 28%; height: 2px; background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), var(--green), transparent); animation: experienceScan 5s linear infinite; }
+.experience-rail { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--muted); font: 700 10px var(--font-mono); letter-spacing: .12em; }
+.experience-rail > span { width: 54px; padding: 10px 4px; border: 1px solid rgba(63,140,255,.25); text-align: center; }
+.experience-rail > span:last-child { color: var(--green); border-color: rgba(107,234,154,.43); box-shadow: 0 0 20px rgba(107,234,154,.08); }
+.experience-line { position: relative; width: 2px; min-height: 145px; flex: 1; overflow: hidden; background: linear-gradient(var(--blue), rgba(57,217,255,.12)); }
+.experience-line i { position: absolute; top: -35%; left: 0; width: 100%; height: 35%; background: linear-gradient(transparent, var(--cyan), transparent); animation: experienceRail 2.3s linear infinite; }
+.experience-main { position: relative; z-index: 1; min-width: 0; }
+.experience-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+.experience-role { display: flex; align-items: center; gap: 18px; min-width: 0; }
+.experience-icon { display: grid; flex: 0 0 66px; width: 66px; height: 66px; place-items: center; border: 1px solid rgba(57,217,255,.35); border-radius: 14px; background: linear-gradient(145deg, rgba(57,217,255,.1), rgba(63,140,255,.045)); box-shadow: inset 0 0 24px rgba(57,217,255,.045); }
+.experience-icon img { width: 35px; height: 35px; filter: drop-shadow(0 0 10px rgba(57,217,255,.4)); }
+.experience-role h3 { margin: 5px 0 7px; font-size: clamp(25px,3vw,39px); line-height: 1.05; }
+.experience-role > div:last-child > p:last-child { color: var(--muted); font-size: 14px; }
+.experience-role > div:last-child > p:last-child span { margin: 0 7px; color: var(--blue); }
+.experience-status { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; padding: 9px 12px; border: 1px solid rgba(107,234,154,.35); color: var(--green); background: rgba(107,234,154,.055); font: 700 10px var(--font-mono); letter-spacing: .1em; }
+.experience-status i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); animation: statusPulse 1.7s ease-in-out infinite; }
+.experience-tasks { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin-top: 30px; list-style: none; }
+.experience-tasks li { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 14px 16px; border: 1px solid rgba(63,140,255,.18); background: rgba(3,10,23,.36); transition: transform .22s, border-color .22s, background .22s; }
+.experience-tasks li:hover { transform: translateX(5px); border-color: rgba(57,217,255,.45); background: rgba(26,92,174,.12); }
+.experience-tasks li span { color: var(--cyan); font: 700 10px var(--font-mono); }
+.experience-tasks li strong { color: var(--text); font-size: 13px; line-height: 1.45; }
+.experience-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.experience-stack span { padding: 7px 10px; border: 1px solid rgba(63,140,255,.22); color: var(--muted); background: rgba(3,9,21,.4); font: 700 9px var(--font-mono); letter-spacing: .06em; transition: color .2s, border-color .2s, transform .2s; }
+.experience-stack span:hover { transform: translateY(-2px); border-color: var(--cyan); color: var(--cyan); }
 .skill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .skill-card { position: relative; min-height: 310px; overflow: hidden; padding: 28px; border: 1px solid var(--line); background: radial-gradient(circle at var(--cap-x,50%) var(--cap-y,50%), rgba(48,137,255,.16), transparent 34%), linear-gradient(145deg, rgba(12,25,48,.88), rgba(5,11,23,.82)); transition: transform .25s, border-color .25s, box-shadow .25s; }
 .skill-card::before { content: ""; position: absolute; top: 0; left: -35%; width: 55%; height: 2px; background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), transparent); animation: cardScan 3.4s linear infinite; }
@@ -351,6 +378,9 @@ footer a { text-decoration: none; } .footer-status { color: var(--green); }
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -9px; }
 }
+@keyframes experienceScan { to { transform: translateX(560%); } }
+@keyframes experienceRail { to { top: 100%; } }
+@keyframes experienceRailMobile { to { left: 100%; } }
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; padding-top: 140px; }
@@ -378,6 +408,15 @@ footer a { text-decoration: none; } .footer-status { color: var(--green); }
   .radar { width: 165px; }
   .metrics { grid-template-columns: 1fr 1fr; }
   .section { padding: 82px 0; }
+  .experience-feature { grid-template-columns: 1fr; gap: 20px; padding: 24px 18px; }
+  .experience-rail { flex-direction: row; }
+  .experience-line { width: auto; height: 2px; min-height: 0; }
+  .experience-line i { top: 0; left: -35%; width: 35%; height: 100%; background: linear-gradient(90deg, transparent, var(--cyan), transparent); animation-name: experienceRailMobile; }
+  .experience-top { flex-direction: column; }
+  .experience-role { align-items: flex-start; }
+  .experience-icon { flex-basis: 54px; width: 54px; height: 54px; }
+  .experience-icon img { width: 30px; height: 30px; }
+  .experience-tasks { grid-template-columns: 1fr; }
   .skill-grid { grid-template-columns: 1fr; }
   .tool-panel { grid-template-columns: 1fr; }
   .tech-showcase-head { grid-template-columns: 1fr; gap: 18px; }
