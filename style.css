@@ -219,8 +219,8 @@ h1 { max-width: 700px; font-size: clamp(48px, 6.2vw, 84px); line-height: .99; le
 .project-card { position: relative; display: grid; grid-template-columns: 1.45fr .75fr; border: 1px solid rgba(63,140,255,.26); background: rgba(5,12,25,.8); box-shadow: 0 28px 80px rgba(5,45,115,.12); }
 .project-card::before { content: ""; position: absolute; z-index: 3; inset: -1px auto -1px -1px; width: 3px; background: linear-gradient(var(--blue), var(--cyan), transparent); }
 .project-visual { position: relative; min-height: 470px; overflow: hidden; background: #050912; }
-.project-visual img { width: 100%; height: 100%; position: absolute; object-fit: cover; object-position: center; filter: saturate(.86) contrast(1.03); transition: transform .5s; }
-.project-card:hover img { transform: scale(1.025); }
+.project-visual img { width: 100%; height: 100%; position: absolute; object-fit: contain; object-position: center; background: #030813; filter: saturate(.9) contrast(1.03); transition: transform .5s; }
+.project-card:hover img { transform: scale(1.005); }
 .project-visual::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 80px rgba(0,0,0,.3); pointer-events: none; }
 .image-status { position: absolute; z-index: 2; left: 20px; bottom: 20px; padding: 8px 11px; color: var(--green); background: rgba(2,8,18,.85); border: 1px solid rgba(107,234,154,.24); font: 700 9px var(--font-mono); letter-spacing: .08em; backdrop-filter: blur(8px); }
 .image-status span { display: inline-block; width: 6px; height: 6px; margin-right: 6px; border-radius: 50%; background: var(--green); }
@@ -238,7 +238,7 @@ h1 { max-width: 700px; font-size: clamp(48px, 6.2vw, 84px); line-height: .99; le
 .absensi-visual img { object-position: center; }
 .project-gallery .gallery-image { opacity: 0; transform: scale(1.025); transition: opacity .65s ease, transform 1s ease; }
 .project-gallery .gallery-image.active { opacity: 1; transform: scale(1); }
-.project-gallery:hover .gallery-image.active { transform: scale(1.012); }
+.project-gallery:hover .gallery-image.active { transform: scale(1.005); }
 .gallery-controls { position: absolute; z-index: 4; right: 20px; bottom: 20px; display: flex; gap: 7px; }
 .gallery-controls button {
   width: 36px;
