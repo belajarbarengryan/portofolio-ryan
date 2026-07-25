@@ -17,6 +17,49 @@ if (!prefersReducedMotion && hasFinePointer) {
   }, { passive: true });
 }
 
+if (!prefersReducedMotion && hasFinePointer) {
+  const cursor = document.createElement('span');
+  const cursorRing = document.createElement('span');
+  cursor.className = 'ux-cursor';
+  cursorRing.className = 'ux-cursor-ring';
+  cursor.setAttribute('aria-hidden', 'true');
+  cursorRing.setAttribute('aria-hidden', 'true');
+  document.body.append(cursor, cursorRing);
+  document.body.classList.add('ux-cursor-enabled');
+
+  let pointerX = window.innerWidth / 2;
+  let pointerY = window.innerHeight / 2;
+  let ringX = pointerX;
+  let ringY = pointerY;
+
+  function renderCustomCursor() {
+    ringX += (pointerX - ringX) * 0.16;
+    ringY += (pointerY - ringY) * 0.16;
+    cursor.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0)`;
+    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+    window.requestAnimationFrame(renderCustomCursor);
+  }
+
+  window.addEventListener('pointermove', (event) => {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    cursor.classList.add('visible');
+    cursorRing.classList.add('visible');
+  }, { passive: true });
+
+  document.addEventListener('pointerover', (event) => {
+    const isInteractive = event.target.closest('a, button, .project-visual, .tech-item, .skill-card');
+    cursorRing.classList.toggle('hovering', Boolean(isInteractive));
+  });
+
+  document.documentElement.addEventListener('mouseleave', () => {
+    cursor.classList.remove('visible');
+    cursorRing.classList.remove('visible');
+  });
+
+  renderCustomCursor();
+}
+
 menuButton.addEventListener('click', () => {
   const isOpen = navigation.classList.toggle('open');
   menuButton.setAttribute('aria-expanded', String(isOpen));
@@ -236,6 +279,90 @@ document.querySelectorAll('[data-gallery]').forEach((gallery) => {
   gallery.addEventListener('focusin', () => window.clearInterval(autoplay));
   gallery.addEventListener('focusout', startAutoplay);
   startAutoplay();
+});
+
+const projectLightbox = document.createElement('div');
+projectLightbox.className = 'project-lightbox';
+projectLightbox.setAttribute('role', 'dialog');
+projectLightbox.setAttribute('aria-modal', 'true');
+projectLightbox.setAttribute('aria-hidden', 'true');
+projectLightbox.setAttribute('aria-label', 'Preview proyek');
+projectLightbox.innerHTML = `
+  <div class="lightbox-panel">
+    <button class="lightbox-close" type="button" aria-label="Tutup preview proyek">&times;</button>
+    <div class="lightbox-head">
+      <div>
+        <p class="lightbox-index"></p>
+        <h3 class="lightbox-title"></h3>
+      </div>
+      <p class="lightbox-hint">ESC TO CLOSE / FULL PROJECT VIEW</p>
+    </div>
+    <div class="lightbox-media">
+      <img src="" alt="">
+    </div>
+  </div>
+`;
+document.body.append(projectLightbox);
+
+const lightboxClose = projectLightbox.querySelector('.lightbox-close');
+const lightboxImage = projectLightbox.querySelector('.lightbox-media img');
+const lightboxTitle = projectLightbox.querySelector('.lightbox-title');
+const lightboxIndex = projectLightbox.querySelector('.lightbox-index');
+let lightboxTrigger = null;
+let lightboxResetTimer;
+
+function closeProjectLightbox() {
+  if (!projectLightbox.classList.contains('open')) return;
+  projectLightbox.classList.remove('open');
+  projectLightbox.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('lightbox-open');
+  lightboxResetTimer = window.setTimeout(() => {
+    lightboxImage.removeAttribute('src');
+  }, 420);
+  lightboxTrigger?.focus();
+}
+
+function openProjectLightbox(visual) {
+  const projectCard = visual.closest('.project-card');
+  const activeImage = visual.querySelector('.gallery-image.active') || visual.querySelector('img');
+  if (!projectCard || !activeImage) return;
+
+  window.clearTimeout(lightboxResetTimer);
+  lightboxTrigger = visual;
+  lightboxImage.src = activeImage.currentSrc || activeImage.src;
+  lightboxImage.alt = activeImage.alt;
+  lightboxTitle.textContent = projectCard.querySelector('.project-info h3')?.textContent || 'Project Preview';
+  lightboxIndex.textContent = projectCard.querySelector('.project-index')?.textContent || 'PROJECT VIEW';
+  projectLightbox.classList.add('open');
+  projectLightbox.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('lightbox-open');
+  lightboxClose.focus();
+}
+
+document.querySelectorAll('.project-visual').forEach((visual) => {
+  const projectTitle = visual.closest('.project-card')?.querySelector('.project-info h3')?.textContent;
+  visual.setAttribute('role', 'button');
+  visual.setAttribute('tabindex', '0');
+  visual.setAttribute('aria-label', `Buka tampilan penuh ${projectTitle || 'proyek'}`);
+
+  visual.addEventListener('click', (event) => {
+    if (event.target.closest('[data-slide]')) return;
+    openProjectLightbox(visual);
+  });
+
+  visual.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    openProjectLightbox(visual);
+  });
+});
+
+lightboxClose.addEventListener('click', closeProjectLightbox);
+projectLightbox.addEventListener('click', (event) => {
+  if (event.target === projectLightbox) closeProjectLightbox();
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeProjectLightbox();
 });
 
 const copyButton = document.querySelector('.copy-email');
