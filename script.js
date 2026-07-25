@@ -1,6 +1,21 @@
 const menuButton = document.querySelector('.menu-button');
 const navigation = document.querySelector('.nav-links');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+document.body.classList.add('motion-ready');
+
+if (!prefersReducedMotion && hasFinePointer) {
+  let pointerFrame;
+
+  window.addEventListener('pointermove', (event) => {
+    window.cancelAnimationFrame(pointerFrame);
+    pointerFrame = window.requestAnimationFrame(() => {
+      document.body.style.setProperty('--mouse-x', `${event.clientX}px`);
+      document.body.style.setProperty('--mouse-y', `${event.clientY}px`);
+    });
+  }, { passive: true });
+}
 
 menuButton.addEventListener('click', () => {
   const isOpen = navigation.classList.toggle('open');
@@ -35,6 +50,37 @@ document.querySelectorAll('.reveal').forEach((element, index) => {
   revealObserver.observe(element);
 });
 
+document.querySelectorAll('[data-counter]').forEach((counter) => {
+  const target = Number(counter.dataset.counter);
+
+  if (prefersReducedMotion || !Number.isFinite(target)) {
+    counter.textContent = String(target);
+    return;
+  }
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    if (!entries[0].isIntersecting) return;
+
+    const startedAt = performance.now();
+    const duration = 1100;
+
+    function updateCounter(now) {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+      counter.textContent = String(Math.round(target * easedProgress));
+
+      if (progress < 1) {
+        window.requestAnimationFrame(updateCounter);
+      }
+    }
+
+    window.requestAnimationFrame(updateCounter);
+    counterObserver.disconnect();
+  }, { threshold: 0.65 });
+
+  counterObserver.observe(counter);
+});
+
 const progressBar = document.querySelector('.scroll-progress');
 
 function updateScrollProgress() {
@@ -64,7 +110,7 @@ document.querySelectorAll('main section[id]').forEach((section) => sectionObserv
 
 const techShowcase = document.querySelector('.tech-showcase');
 
-if (techShowcase && window.matchMedia('(pointer: fine)').matches) {
+if (techShowcase && hasFinePointer) {
   techShowcase.addEventListener('pointermove', (event) => {
     const bounds = techShowcase.getBoundingClientRect();
     techShowcase.style.setProperty('--tech-x', `${event.clientX - bounds.left}px`);
@@ -73,7 +119,7 @@ if (techShowcase && window.matchMedia('(pointer: fine)').matches) {
 }
 
 document.querySelectorAll('.interactive-panel').forEach((panel) => {
-  if (!window.matchMedia('(pointer: fine)').matches) return;
+  if (!hasFinePointer) return;
 
   panel.addEventListener('pointermove', (event) => {
     const bounds = panel.getBoundingClientRect();
@@ -83,7 +129,7 @@ document.querySelectorAll('.interactive-panel').forEach((panel) => {
 });
 
 document.querySelectorAll('.capability-card').forEach((card) => {
-  if (!window.matchMedia('(pointer: fine)').matches) return;
+  if (!hasFinePointer) return;
 
   card.addEventListener('pointermove', (event) => {
     const bounds = card.getBoundingClientRect();
@@ -92,7 +138,7 @@ document.querySelectorAll('.capability-card').forEach((card) => {
   });
 });
 
-if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+if (!prefersReducedMotion && hasFinePointer) {
   document.querySelectorAll('.project-visual').forEach((visual) => {
     visual.addEventListener('pointermove', (event) => {
       const bounds = visual.getBoundingClientRect();
@@ -118,7 +164,7 @@ if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
   });
 }
 
-if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+if (!prefersReducedMotion && hasFinePointer) {
   document.querySelectorAll('.hero-console, .skill-card, .roadmap-card').forEach((card) => {
     card.classList.add('tilt-card');
 
@@ -131,6 +177,23 @@ if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
 
     card.addEventListener('pointerleave', () => {
       card.style.transform = '';
+    });
+  });
+}
+
+if (!prefersReducedMotion && hasFinePointer) {
+  document.querySelectorAll('.button').forEach((button) => {
+    button.addEventListener('pointermove', (event) => {
+      const bounds = button.getBoundingClientRect();
+      const magneticX = (event.clientX - bounds.left - bounds.width / 2) * 0.12;
+      const magneticY = (event.clientY - bounds.top - bounds.height / 2) * 0.12;
+      button.style.setProperty('--magnet-x', `${magneticX}px`);
+      button.style.setProperty('--magnet-y', `${magneticY}px`);
+    });
+
+    button.addEventListener('pointerleave', () => {
+      button.style.setProperty('--magnet-x', '0px');
+      button.style.setProperty('--magnet-y', '0px');
     });
   });
 }
