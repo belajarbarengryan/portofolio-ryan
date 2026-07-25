@@ -373,7 +373,7 @@ h1 { max-width: 700px; font-size: clamp(48px, 6.2vw, 84px); line-height: .99; le
 .tech-showcase-head { position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr .85fr; gap: 50px; align-items: end; }
 .tech-showcase-head h3 { color: transparent; -webkit-text-stroke: 1px rgba(95,179,255,.72); font-size: clamp(46px,7vw,92px); line-height: .95; letter-spacing: -.055em; }
 .tech-showcase-head > p { max-width: 430px; justify-self: end; color: var(--muted); font-size: 14px; }
-.tech-cloud { position: relative; min-height: 620px; margin-top: 30px; }
+.tech-cloud { position: relative; min-height: 1000px; margin-top: 30px; }
 .tech-cloud::after { content: ""; position: absolute; left: 50%; top: 50%; width: 45%; aspect-ratio: 1; transform: translate(-50%,-50%); border: 1px solid rgba(57,217,255,.09); border-radius: 50%; box-shadow: 0 0 0 70px rgba(63,140,255,.025), 0 0 0 140px rgba(118,108,255,.018); }
 .tech-watermark { position: absolute; z-index: 0; left: 50%; top: 50%; transform: translate(-50%,-50%); text-align: center; white-space: nowrap; }
 .tech-watermark span { display: block; color: rgba(57,217,255,.07); font: 700 clamp(54px,9vw,120px) var(--font-mono); letter-spacing: -.09em; }
@@ -414,6 +414,10 @@ h1 { max-width: 700px; font-size: clamp(48px, 6.2vw, 84px); line-height: .99; le
 .absensi-project { margin-top: 18px; border-color: rgba(57,217,255,.24); }
 .absensi-project::before { background: linear-gradient(var(--green), var(--cyan), transparent); }
 .absensi-visual img { object-position: center; }
+.warehouse-project { margin-top: 18px; border-color: rgba(255,51,92,.3); }
+.warehouse-project::before { background: linear-gradient(#ff335c, var(--blue), var(--cyan), transparent); }
+.warehouse-status { color: #ff7893; border-color: rgba(255,51,92,.3); }
+.warehouse-status span { background: #ff335c; box-shadow: 0 0 10px rgba(255,51,92,.75); }
 .project-gallery .gallery-image { opacity: 0; transform: none !important; transition: opacity .65s ease; }
 .project-gallery .gallery-image.active { opacity: 1; transform: none !important; }
 .project-gallery:hover .gallery-image.active { transform: none !important; }
@@ -433,6 +437,14 @@ h1 { max-width: 700px; font-size: clamp(48px, 6.2vw, 84px); line-height: .99; le
 .gallery-controls button.active { color: #fff; border-color: var(--cyan); background: linear-gradient(135deg, rgba(38,111,238,.9), rgba(32,180,220,.82)); box-shadow: 0 0 18px rgba(57,217,255,.22); }
 .project-stack { position: relative; overflow: hidden; margin-top: 18px; padding: 34px; display: grid; grid-template-columns: .55fr 1.45fr; align-items: center; gap: 30px; border: 1px solid rgba(63,140,255,.24); background: radial-gradient(circle at var(--panel-x,50%) var(--panel-y,50%), rgba(46,135,255,.15), transparent 32%), linear-gradient(135deg, rgba(9,23,47,.94), rgba(4,10,22,.94)); box-shadow: 0 25px 70px rgba(0,30,90,.14); }
 .project-stack::before { content: "DATA FLOW"; position: absolute; left: 42%; top: 50%; transform: translate(-50%,-50%); color: rgba(57,217,255,.035); font: 700 clamp(52px,7vw,90px) var(--font-mono); white-space: nowrap; }
+.warehouse-stack { border-color: rgba(255,51,92,.24); }
+.warehouse-stack::before { content: "FULL STACK"; color: rgba(255,51,92,.035); }
+.warehouse-flow > div { min-height: 138px; }
+.warehouse-flow > div:nth-of-type(1) { border-top-color: rgba(97,218,251,.55); }
+.warehouse-flow > div:nth-of-type(2) { border-top-color: rgba(255,255,255,.34); }
+.warehouse-flow > div:nth-of-type(3) { border-top-color: rgba(118,108,255,.55); }
+.warehouse-flow > div:nth-of-type(4) { border-top-color: rgba(51,103,145,.7); }
+.warehouse-flow > div:nth-of-type(5) { border-top-color: rgba(36,150,237,.65); }
 .stack-title { position: relative; z-index: 1; }
 .stack-title > p:last-child { max-width: 230px; margin-top: 12px; color: var(--muted); font-size: 12px; }
 .stack-flow { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 9px; }
@@ -720,6 +732,7 @@ html[data-theme="light"] .ux-cursor { background: linear-gradient(145deg, #173b6
   .tech-item:hover { transform: translateY(-4px) scale(1.02); }
   .project-visual { min-height: 0; aspect-ratio: 16 / 9; }
   .project-info { padding: 30px 22px; }
+  .warehouse-project .image-status { display: none; }
   .contact-section { margin-bottom: 55px; padding-block: 75px; }
   .project-lightbox { padding: 10px; }
   .lightbox-panel { height: min(82vh,680px); }
