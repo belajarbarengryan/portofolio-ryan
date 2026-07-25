@@ -103,6 +103,64 @@ if (siteLoader) {
   window.requestAnimationFrame(updateLoader);
 }
 
+const textTypeElement = document.querySelector('[data-text-type]');
+
+if (textTypeElement) {
+  let textValues;
+
+  try {
+    textValues = JSON.parse(textTypeElement.dataset.textValues);
+  } catch {
+    textValues = [textTypeElement.textContent.trim()];
+  }
+
+  if (!Array.isArray(textValues) || textValues.length === 0) {
+    textValues = [textTypeElement.textContent.trim()];
+  }
+
+  if (prefersReducedMotion) {
+    textTypeElement.textContent = textValues[0];
+  } else {
+    let phraseIndex = 0;
+    let characterIndex = 0;
+    let deleting = false;
+
+    textTypeElement.textContent = '';
+
+    function runTextType() {
+      const phrase = textValues[phraseIndex];
+
+      if (!deleting) {
+        characterIndex += 1;
+        textTypeElement.textContent = phrase.slice(0, characterIndex);
+
+        if (characterIndex >= phrase.length) {
+          deleting = true;
+          window.setTimeout(runTextType, 1550);
+          return;
+        }
+
+        window.setTimeout(runTextType, 54 + Math.random() * 36);
+        return;
+      }
+
+      characterIndex -= 1;
+      textTypeElement.textContent = phrase.slice(0, characterIndex);
+
+      if (characterIndex <= 0) {
+        deleting = false;
+        phraseIndex = (phraseIndex + 1) % textValues.length;
+        window.setTimeout(runTextType, 320);
+        return;
+      }
+
+      window.setTimeout(runTextType, 28 + Math.random() * 22);
+    }
+
+    window.setTimeout(runTextType, siteLoader ? 2100 : 420);
+  }
+}
+
 if (!prefersReducedMotion && hasFinePointer) {
   let pointerFrame;
 
@@ -269,15 +327,91 @@ document.querySelectorAll('.interactive-panel').forEach((panel) => {
   });
 });
 
-document.querySelectorAll('.capability-card').forEach((card) => {
-  if (!hasFinePointer) return;
+const magicBento = document.querySelector('.magic-bento');
 
-  card.addEventListener('pointermove', (event) => {
-    const bounds = card.getBoundingClientRect();
-    card.style.setProperty('--cap-x', `${event.clientX - bounds.left}px`);
-    card.style.setProperty('--cap-y', `${event.clientY - bounds.top}px`);
+if (magicBento && hasFinePointer && !prefersReducedMotion) {
+  const bentoCards = [...magicBento.querySelectorAll('.capability-card')];
+  const particleColors = ['#39d9ff', '#4b8cff', '#6bea9a', '#8d82ff'];
+
+  bentoCards.forEach((card) => {
+    const glow = document.createElement('span');
+    glow.className = 'magic-glow';
+    glow.setAttribute('aria-hidden', 'true');
+    card.prepend(glow);
+
+    card.addEventListener('pointerenter', (event) => {
+      const bounds = card.getBoundingClientRect();
+      const originX = event.clientX - bounds.left;
+      const originY = event.clientY - bounds.top;
+
+      for (let index = 0; index < 7; index += 1) {
+        const particle = document.createElement('i');
+        const angle = (Math.PI * 2 * index) / 7 + Math.random() * 0.45;
+        const distance = 24 + Math.random() * 54;
+        particle.className = 'magic-particle';
+        particle.style.left = `${originX}px`;
+        particle.style.top = `${originY}px`;
+        particle.style.setProperty('--particle-x', `${Math.cos(angle) * distance}px`);
+        particle.style.setProperty('--particle-y', `${Math.sin(angle) * distance}px`);
+        particle.style.setProperty('--particle-size', `${2 + Math.random() * 3}px`);
+        particle.style.setProperty('--particle-color', particleColors[index % particleColors.length]);
+        card.append(particle);
+        particle.addEventListener('animationend', () => particle.remove(), { once: true });
+      }
+    });
+
+    card.addEventListener('pointermove', (event) => {
+      const bounds = card.getBoundingClientRect();
+      const localX = event.clientX - bounds.left;
+      const localY = event.clientY - bounds.top;
+      const normalizedX = localX / bounds.width - 0.5;
+      const normalizedY = localY / bounds.height - 0.5;
+
+      card.style.setProperty('--cap-x', `${localX}px`);
+      card.style.setProperty('--cap-y', `${localY}px`);
+      card.style.setProperty('--magic-rotate-x', `${normalizedY * -6}deg`);
+      card.style.setProperty('--magic-rotate-y', `${normalizedX * 7}deg`);
+      card.style.setProperty('--magic-shift-x', `${normalizedX * 5}px`);
+      card.style.setProperty('--magic-shift-y', `${normalizedY * 4 - 5}px`);
+    });
+
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--magic-rotate-x', '0deg');
+      card.style.setProperty('--magic-rotate-y', '0deg');
+      card.style.setProperty('--magic-shift-x', '0px');
+      card.style.setProperty('--magic-shift-y', '0px');
+    });
   });
-});
+
+  magicBento.addEventListener('pointermove', (event) => {
+    const gridBounds = magicBento.getBoundingClientRect();
+    magicBento.style.setProperty('--bento-x', `${event.clientX - gridBounds.left}px`);
+    magicBento.style.setProperty('--bento-y', `${event.clientY - gridBounds.top}px`);
+    magicBento.style.setProperty('--bento-opacity', '1');
+
+    bentoCards.forEach((card) => {
+      const bounds = card.getBoundingClientRect();
+      const localX = event.clientX - bounds.left;
+      const localY = event.clientY - bounds.top;
+      const distance = Math.hypot(
+        event.clientX - (bounds.left + bounds.width / 2),
+        event.clientY - (bounds.top + bounds.height / 2)
+      );
+      const glowStrength = Math.max(0, 1 - distance / 420);
+
+      card.style.setProperty('--magic-x', `${localX}px`);
+      card.style.setProperty('--magic-y', `${localY}px`);
+      card.style.setProperty('--magic-glow-opacity', String(glowStrength * 0.95));
+    });
+  });
+
+  magicBento.addEventListener('pointerleave', () => {
+    magicBento.style.setProperty('--bento-opacity', '0');
+    bentoCards.forEach((card) => {
+      card.style.setProperty('--magic-glow-opacity', '0');
+    });
+  });
+}
 
 if (!prefersReducedMotion && hasFinePointer) {
   document.querySelectorAll('.project-visual').forEach((visual) => {
@@ -306,7 +440,7 @@ if (!prefersReducedMotion && hasFinePointer) {
 }
 
 if (!prefersReducedMotion && hasFinePointer) {
-  document.querySelectorAll('.hero-console, .skill-card, .roadmap-card').forEach((card) => {
+  document.querySelectorAll('.hero-console, .roadmap-card').forEach((card) => {
     card.classList.add('tilt-card');
 
     card.addEventListener('pointermove', (event) => {

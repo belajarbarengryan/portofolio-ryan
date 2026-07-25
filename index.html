@@ -13,7 +13,7 @@
       document.documentElement.dataset.theme = 'dark';
     }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260726-5">
+  <link rel="stylesheet" href="style.css?v=20260726-6">
 </head>
 <body>
   <div class="site-loader" role="status" aria-live="polite" aria-label="Memuat portofolio Ryan">
@@ -88,7 +88,15 @@
     <section class="hero" id="beranda">
       <div class="hero-copy reveal">
         <p class="eyebrow"><span>01</span> NETWORK OPERATIONS</p>
-        <h1>Menjaga jaringan tetap <span class="gradient-text">terhubung.</span></h1>
+        <h1 aria-label="Menjaga jaringan tetap terhubung, server tetap terpantau, dan layanan tetap berjalan.">
+          Menjaga
+          <span class="type-line gradient-text" aria-hidden="true">
+            <span
+              data-text-type
+              data-text-values='["jaringan tetap terhubung.","server tetap terpantau.","layanan tetap berjalan."]'
+            >jaringan tetap terhubung.</span><span class="type-cursor">_</span>
+          </span>
+        </h1>
         <p class="hero-intro">
           Halo, saya <strong>Ryan Nur Efendy</strong>. Saat ini saya bekerja sebagai
           Network Operation Center di perusahaan penyedia layanan internet Digital Nusantara.
@@ -241,7 +249,7 @@
         </div>
       </article>
 
-      <div class="skill-grid">
+      <div class="skill-grid magic-bento" aria-label="Aktivitas operasional interaktif">
         <article class="skill-card capability-card reveal" data-label="MONITOR">
           <div class="skill-icon"><img src="https://api.iconify.design/material-symbols:router-outline.svg?color=%2339d9ff" alt=""></div>
           <span class="card-number">01</span>
@@ -571,6 +579,6 @@
   </footer>
 
   <div class="toast" role="status" aria-live="polite">Email berhasil disalin</div>
-  <script src="script.js?v=20260726-5"></script>
+  <script src="script.js?v=20260726-6"></script>
 </body>
 </html>
