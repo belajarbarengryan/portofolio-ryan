@@ -418,9 +418,30 @@ h1 { max-width: 700px; font-size: clamp(48px, 6.2vw, 84px); line-height: .99; le
 .warehouse-project::before { background: linear-gradient(#ff335c, var(--blue), var(--cyan), transparent); }
 .warehouse-status { color: #ff7893; border-color: rgba(255,51,92,.3); }
 .warehouse-status span { background: #ff335c; box-shadow: 0 0 10px rgba(255,51,92,.75); }
-.project-gallery .gallery-image { opacity: 0; transform: none !important; transition: opacity .65s ease; }
-.project-gallery .gallery-image.active { opacity: 1; transform: none !important; }
-.project-gallery:hover .gallery-image.active { transform: none !important; }
+.card-swap-gallery { perspective: 1200px; isolation: isolate; }
+.project-gallery .gallery-image {
+  position: absolute;
+  z-index: var(--swap-z,1);
+  inset: 10% 14% 14% 6%;
+  overflow: hidden;
+  opacity: var(--swap-opacity,0);
+  border: 1px solid rgba(93,154,255,.32);
+  border-radius: 12px;
+  background: #07101f;
+  box-shadow: 0 25px 55px rgba(0,0,0,.34), 0 0 0 1px rgba(255,255,255,.025) inset;
+  transform: translate3d(var(--swap-x,0),var(--swap-y,0),var(--swap-z-depth,0)) rotate(var(--swap-rotate,0deg)) scale(var(--swap-scale,1));
+  transform-origin: 50% 95%;
+  transition: transform .68s cubic-bezier(.2,.78,.2,1), opacity .42s ease, border-color .3s, box-shadow .3s;
+  will-change: transform, opacity;
+}
+.project-gallery .gallery-image.active { border-color: rgba(57,217,255,.72); box-shadow: 0 28px 65px rgba(0,31,92,.48), 0 0 25px rgba(57,217,255,.1); }
+.project-gallery .gallery-image.is-swapping-out { opacity: 0 !important; transform: translate3d(52%,-24%,140px) rotate(11deg) scale(.94) !important; }
+.swap-card figcaption { position: relative; z-index: 3; height: 42px; padding: 0 13px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; color: #dce8fa; border-bottom: 1px solid rgba(93,154,255,.2); background: linear-gradient(90deg, rgba(14,29,56,.98), rgba(6,14,29,.98)); font-family: var(--font-mono); }
+.swap-card figcaption span { color: var(--cyan); font-size: 8px; }
+.swap-card figcaption strong { overflow: hidden; font-size: 9px; letter-spacing: .04em; text-overflow: ellipsis; white-space: nowrap; }
+.swap-card figcaption small { color: #7385a2; font-size: 6px; letter-spacing: .13em; }
+.project-visual .swap-card img { top: 42px; bottom: 0; width: 100%; height: calc(100% - 42px); object-fit: contain !important; background: #030813; }
+.card-swap-gallery::after { box-shadow: inset 0 0 70px rgba(0,0,0,.2); }
 .gallery-controls { position: absolute; z-index: 4; right: 20px; bottom: 20px; display: flex; gap: 7px; }
 .gallery-controls button {
   width: 36px;
@@ -586,6 +607,17 @@ html[data-theme="light"] .project-card { border-color: rgba(23,107,219,.18); bac
 html[data-theme="light"] .project-info > p { color: #586b85; }
 html[data-theme="light"] .project-tags span { color: #315c94; background: rgba(23,107,219,.045); }
 html[data-theme="light"] .project-data strong { color: #263d5e; }
+html[data-theme="light"] .project-gallery .gallery-image {
+  border-color: rgba(23,107,219,.24);
+  background: #fff;
+  box-shadow: 0 25px 55px rgba(43,75,120,.2), inset 0 0 0 1px rgba(255,255,255,.7);
+}
+html[data-theme="light"] .swap-card figcaption {
+  color: #1c3559;
+  border-bottom-color: rgba(23,107,219,.14);
+  background: linear-gradient(90deg,#fff,#edf4fd);
+}
+html[data-theme="light"] .swap-card figcaption small { color: #687994; }
 html[data-theme="light"] .roadmap-heading,
 html[data-theme="light"] .roadmap-card { background: rgba(255,255,255,.78); box-shadow: 0 18px 42px rgba(42,78,127,.07); }
 html[data-theme="light"] .contact-section {
@@ -731,6 +763,11 @@ html[data-theme="light"] .ux-cursor { background: linear-gradient(145deg, #173b6
   .tech-item { position: relative; inset: auto; width: auto; min-height: 142px; transform: none; border-radius: 10px !important; animation-duration: 4.5s; }
   .tech-item:hover { transform: translateY(-4px) scale(1.02); }
   .project-visual { min-height: 0; aspect-ratio: 16 / 9; }
+  .card-swap-gallery { aspect-ratio: 4 / 3; }
+  .project-gallery .gallery-image { inset: 10% 9% 17% 4%; }
+  .swap-card figcaption { height: 36px; padding: 0 9px; grid-template-columns: auto 1fr; }
+  .swap-card figcaption small { display: none; }
+  .project-visual .swap-card img { top: 36px; height: calc(100% - 36px); }
   .project-info { padding: 30px 22px; }
   .warehouse-project .image-status { display: none; }
   .contact-section { margin-bottom: 55px; padding-block: 75px; }
