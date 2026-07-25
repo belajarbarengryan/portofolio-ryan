@@ -5,6 +5,79 @@ const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
 
 document.body.classList.add('motion-ready');
 
+const siteLoader = document.querySelector('.site-loader');
+
+if (siteLoader) {
+  const loaderProgress = siteLoader.querySelector('.loader-progress');
+  const loaderNumber = siteLoader.querySelector('.loader-readout b');
+  const loaderMessage = siteLoader.querySelector('.loader-message');
+  const loaderDuration = prefersReducedMotion ? 260 : 1850;
+  const loaderStartedAt = performance.now();
+  const loaderMessages = [
+    'Booting interface modules',
+    'Connecting monitoring nodes',
+    'Synchronizing project data',
+    'Interface ready'
+  ];
+  let pageReady = document.readyState === 'complete';
+  let loaderFinished = false;
+
+  document.body.classList.add('loader-active');
+  window.addEventListener('load', () => {
+    pageReady = true;
+  }, { once: true });
+
+  function finishLoader() {
+    if (loaderFinished) return;
+    loaderFinished = true;
+    siteLoader.style.setProperty('--loader-progress', '100%');
+    loaderProgress.setAttribute('aria-valuenow', '100');
+    loaderNumber.textContent = '100';
+    loaderMessage.textContent = loaderMessages[3];
+    siteLoader.classList.add('is-complete');
+
+    window.setTimeout(() => {
+      siteLoader.classList.add('is-closing');
+    }, prefersReducedMotion ? 40 : 230);
+
+    window.setTimeout(() => {
+      siteLoader.classList.add('is-hidden');
+      document.body.classList.remove('loader-active');
+    }, prefersReducedMotion ? 110 : 1050);
+  }
+
+  function updateLoader(now) {
+    const elapsed = now - loaderStartedAt;
+    let progress = Math.min((elapsed / loaderDuration) * 100, pageReady ? 100 : 92);
+
+    if (!pageReady && elapsed > 2600) {
+      progress = Math.min(100, 92 + ((elapsed - 2600) / 500) * 8);
+    }
+
+    const roundedProgress = Math.round(progress);
+    siteLoader.style.setProperty('--loader-progress', `${progress}%`);
+    loaderProgress.setAttribute('aria-valuenow', String(roundedProgress));
+    loaderNumber.textContent = String(roundedProgress);
+
+    if (progress < 34) {
+      loaderMessage.textContent = loaderMessages[0];
+    } else if (progress < 68) {
+      loaderMessage.textContent = loaderMessages[1];
+    } else if (progress < 96) {
+      loaderMessage.textContent = loaderMessages[2];
+    }
+
+    if (progress >= 100) {
+      finishLoader();
+      return;
+    }
+
+    window.requestAnimationFrame(updateLoader);
+  }
+
+  window.requestAnimationFrame(updateLoader);
+}
+
 if (!prefersReducedMotion && hasFinePointer) {
   let pointerFrame;
 
