@@ -5,7 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Portofolio Ryan Nur Efendy, Network Operation Center.">
   <title>Ryan Nur Efendy | Network Operation Center</title>
-  <link rel="stylesheet" href="style.css?v=20260726-2">
+  <script>
+    try {
+      document.documentElement.dataset.theme =
+        localStorage.getItem('ryan-portfolio-theme') === 'light' ? 'light' : 'dark';
+    } catch {
+      document.documentElement.dataset.theme = 'dark';
+    }
+  </script>
+  <link rel="stylesheet" href="style.css?v=20260726-3">
 </head>
 <body>
   <div class="site-loader" role="status" aria-live="polite" aria-label="Memuat portofolio Ryan">
@@ -64,7 +72,16 @@
       <a href="#kontak">Kontak</a>
     </nav>
 
-    <div class="system-pill"><span></span> AVAILABLE</div>
+    <div class="header-utilities">
+      <button class="theme-toggle" type="button" aria-label="Aktifkan light mode" aria-pressed="false">
+        <span class="theme-track" aria-hidden="true">
+          <b class="theme-moon">☾</b>
+          <b class="theme-sun">☀</b>
+          <i></i>
+        </span>
+      </button>
+      <div class="system-pill"><span></span> AVAILABLE</div>
+    </div>
   </header>
 
   <main>
@@ -445,6 +462,6 @@
   </footer>
 
   <div class="toast" role="status" aria-live="polite">Email berhasil disalin</div>
-  <script src="script.js?v=20260726-2"></script>
+  <script src="script.js?v=20260726-3"></script>
 </body>
 </html>

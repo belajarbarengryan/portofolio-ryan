@@ -2,8 +2,33 @@ const menuButton = document.querySelector('.menu-button');
 const navigation = document.querySelector('.nav-links');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+const themeToggle = document.querySelector('.theme-toggle');
+const rootElement = document.documentElement;
 
 document.body.classList.add('motion-ready');
+
+function updateThemeToggle() {
+  const isLight = rootElement.dataset.theme === 'light';
+  themeToggle.setAttribute('aria-pressed', String(isLight));
+  themeToggle.setAttribute('aria-label', isLight ? 'Aktifkan dark mode' : 'Aktifkan light mode');
+}
+
+updateThemeToggle();
+
+themeToggle.addEventListener('click', () => {
+  const nextTheme = rootElement.dataset.theme === 'light' ? 'dark' : 'light';
+  rootElement.classList.add('theme-transition');
+  rootElement.dataset.theme = nextTheme;
+
+  try {
+    localStorage.setItem('ryan-portfolio-theme', nextTheme);
+  } catch {
+    // Website tetap bisa mengganti tema meskipun penyimpanan browser diblokir.
+  }
+
+  updateThemeToggle();
+  window.setTimeout(() => rootElement.classList.remove('theme-transition'), 460);
+});
 
 const siteLoader = document.querySelector('.site-loader');
 
