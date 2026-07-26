@@ -13,9 +13,9 @@
       document.documentElement.dataset.theme = 'dark';
     }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260726-7">
+  <link rel="stylesheet" href="style.css?v=20260726-8">
 </head>
-<body>
+<body class="home-view">
   <div class="site-loader" role="status" aria-live="polite" aria-label="Memuat portofolio Ryan">
     <div class="loader-grid" aria-hidden="true"></div>
 
@@ -85,7 +85,83 @@
   </header>
 
   <main>
-    <section class="hero desktop-hero" id="beranda">
+    <section class="network-home" id="beranda" aria-labelledby="home-title">
+      <div class="home-scene" data-network-scene>
+        <div class="home-noise" aria-hidden="true"></div>
+        <div class="home-top-meta">
+          <span>NETWORK PORTFOLIO / 2026</span>
+          <span><i></i> NOC SYSTEM ONLINE</span>
+        </div>
+
+        <div class="home-title-wrap">
+          <p>NETWORK OPERATION CENTER</p>
+          <h1 id="home-title" aria-label="Ryan Nur Efendy">
+            <span class="home-title-line line-one">RYAN NUR</span>
+            <span class="home-title-line line-two">EFENDY</span>
+          </h1>
+        </div>
+
+        <div class="network-sticker sticker-mikrotik" data-depth="1.1" aria-hidden="true">
+          <span class="sticker-orbit"></span>
+          <img src="https://api.iconify.design/simple-icons:mikrotik.svg?color=%2339d9ff" alt="">
+          <strong>MIKROTIK</strong><small>CORE ROUTER</small>
+        </div>
+
+        <div class="network-sticker sticker-router" data-depth="1.55" aria-hidden="true">
+          <span class="router-antenna antenna-left"></span>
+          <span class="router-antenna antenna-right"></span>
+          <img src="https://api.iconify.design/mdi:router-wireless.svg?color=%23ffffff" alt="">
+          <strong>ROUTER</strong><small>ONLINE</small>
+        </div>
+
+        <div class="network-sticker sticker-server" data-depth=".85" aria-hidden="true">
+          <div class="server-lights"><i></i><i></i><i></i></div>
+          <img src="https://api.iconify.design/mdi:server.svg?color=%236bea9a" alt="">
+          <strong>11 SERVER</strong><small>MONITORED</small>
+        </div>
+
+        <div class="network-sticker sticker-modem" data-depth="1.35" aria-hidden="true">
+          <span class="wifi-wave wave-one"></span>
+          <span class="wifi-wave wave-two"></span>
+          <img src="https://api.iconify.design/mdi:access-point-network.svg?color=%237f75ff" alt="">
+          <strong>MODEM / OLT</strong><small>CONNECTED</small>
+        </div>
+
+        <div class="network-sticker sticker-fiber" data-depth="1.8" aria-hidden="true">
+          <img src="https://api.iconify.design/mdi:ethernet-cable.svg?color=%23ff9f43" alt="">
+          <strong>FIBER LINK</strong>
+        </div>
+
+        <div class="packet-route" aria-hidden="true">
+          <i style="--packet-delay:0s"></i>
+          <i style="--packet-delay:-1.6s"></i>
+          <i style="--packet-delay:-3.2s"></i>
+        </div>
+
+        <div class="home-left-status">
+          <strong data-wib-time>00:00</strong>
+          <span>JAKARTA / WIB</span>
+        </div>
+        <div class="home-right-status">
+          <span>11 SERVERS MONITORED</span>
+          <strong>BANDWIDTH STABLE</strong>
+        </div>
+        <div class="home-side-label">NETWORK × SERVER × WEB</div>
+
+        <a class="home-scroll-cue" href="#workstation" aria-label="Masuk ke NOC Workstation">
+          <span>SLIDE TO WORKSTATION</span>
+          <i></i>
+        </a>
+
+        <div class="home-signature">
+          <span class="home-globe">◎</span>
+          <strong>KEEPING SYSTEMS CONNECTED</strong>
+          <small>DIGITAL NUSANTARA — INDONESIA</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero desktop-hero" id="workstation">
       <div class="noc-desktop reveal" aria-label="Ryan NOC interactive workstation">
         <div class="desktop-topbar">
           <div class="desktop-brand">
@@ -665,6 +741,6 @@
   </footer>
 
   <div class="toast" role="status" aria-live="polite">Email berhasil disalin</div>
-  <script src="script.js?v=20260726-7"></script>
+  <script src="script.js?v=20260726-8"></script>
 </body>
 </html>

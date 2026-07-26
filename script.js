@@ -162,8 +162,8 @@ if (textTypeElement) {
 }
 
 const wibClock = document.querySelector('[data-wib-clock]');
-const wibTime = document.querySelector('[data-wib-time]');
-const wibDate = document.querySelector('[data-wib-date]');
+const wibTimes = [...document.querySelectorAll('[data-wib-time]')];
+const wibDates = [...document.querySelectorAll('[data-wib-date]')];
 
 function updateWibTime() {
   const now = new Date();
@@ -192,12 +192,71 @@ function updateWibTime() {
     wibClock.textContent = `${timeText} WIB`;
     wibClock.dateTime = now.toISOString();
   }
-  if (wibTime) wibTime.textContent = shortTimeText;
-  if (wibDate) wibDate.textContent = dateText;
+  wibTimes.forEach((element) => {
+    element.textContent = shortTimeText;
+  });
+  wibDates.forEach((element) => {
+    element.textContent = dateText;
+  });
 }
 
 updateWibTime();
 window.setInterval(updateWibTime, 1000);
+
+const networkHome = document.querySelector('.network-home');
+const networkScene = document.querySelector('[data-network-scene]');
+
+if (networkHome && networkScene) {
+  const networkObjects = [...networkScene.querySelectorAll('[data-depth]')];
+  const firstTitleLine = networkScene.querySelector('.line-one');
+  const secondTitleLine = networkScene.querySelector('.line-two');
+  let homeScrollFrame;
+
+  function updateHomeScrollScene() {
+    const bounds = networkHome.getBoundingClientRect();
+    const progress = Math.min(Math.max(-bounds.top / Math.max(window.innerHeight, 1), 0), 1);
+    const motionProgress = prefersReducedMotion ? 0 : progress;
+    const titleOpacity = Math.max(0, 1 - motionProgress * 1.32);
+    const isHomeVisible = bounds.bottom > window.innerHeight * 0.38;
+
+    firstTitleLine?.style.setProperty('--home-line-one-x', `${motionProgress * -13}vw`);
+    secondTitleLine?.style.setProperty('--home-line-two-x', `${motionProgress * 13}vw`);
+    networkScene.style.setProperty('--home-title-opacity', String(titleOpacity));
+    document.body.classList.toggle('home-view', isHomeVisible);
+
+    networkObjects.forEach((object, index) => {
+      object.style.opacity = String(Math.max(0, 1 - motionProgress * (1.05 + index * 0.04)));
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    window.cancelAnimationFrame(homeScrollFrame);
+    homeScrollFrame = window.requestAnimationFrame(updateHomeScrollScene);
+  }, { passive: true });
+
+  updateHomeScrollScene();
+
+  if (hasFinePointer && !prefersReducedMotion) {
+    networkScene.addEventListener('pointermove', (event) => {
+      const bounds = networkScene.getBoundingClientRect();
+      const normalizedX = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const normalizedY = (event.clientY - bounds.top) / bounds.height - 0.5;
+
+      networkObjects.forEach((object) => {
+        const depth = Number(object.dataset.depth) || 1;
+        object.style.setProperty('--shift-x', `${normalizedX * depth * 24}px`);
+        object.style.setProperty('--shift-y', `${normalizedY * depth * 18}px`);
+      });
+    });
+
+    networkScene.addEventListener('pointerleave', () => {
+      networkObjects.forEach((object) => {
+        object.style.setProperty('--shift-x', '0px');
+        object.style.setProperty('--shift-y', '0px');
+      });
+    });
+  }
+}
 
 const desktopWindow = document.querySelector('.desktop-window');
 const desktopStage = document.querySelector('.desktop-stage');
