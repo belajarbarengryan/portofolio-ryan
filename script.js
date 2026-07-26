@@ -242,6 +242,11 @@ if (networkHome && networkScene) {
       const normalizedX = (event.clientX - bounds.left) / bounds.width - 0.5;
       const normalizedY = (event.clientY - bounds.top) / bounds.height - 0.5;
 
+      firstTitleLine?.style.setProperty('--title-pointer-x', `${normalizedX * -9}px`);
+      firstTitleLine?.style.setProperty('--title-pointer-y', `${normalizedY * -5}px`);
+      secondTitleLine?.style.setProperty('--title-pointer-x-two', `${normalizedX * 9}px`);
+      secondTitleLine?.style.setProperty('--title-pointer-y-two', `${normalizedY * 5}px`);
+
       networkObjects.forEach((object) => {
         const depth = Number(object.dataset.depth) || 1;
         object.style.setProperty('--shift-x', `${normalizedX * depth * 24}px`);
@@ -250,6 +255,10 @@ if (networkHome && networkScene) {
     });
 
     networkScene.addEventListener('pointerleave', () => {
+      firstTitleLine?.style.setProperty('--title-pointer-x', '0px');
+      firstTitleLine?.style.setProperty('--title-pointer-y', '0px');
+      secondTitleLine?.style.setProperty('--title-pointer-x-two', '0px');
+      secondTitleLine?.style.setProperty('--title-pointer-y-two', '0px');
       networkObjects.forEach((object) => {
         object.style.setProperty('--shift-x', '0px');
         object.style.setProperty('--shift-y', '0px');
