@@ -161,6 +161,297 @@ if (textTypeElement) {
   }
 }
 
+const wibClock = document.querySelector('[data-wib-clock]');
+const wibTime = document.querySelector('[data-wib-time]');
+const wibDate = document.querySelector('[data-wib-date]');
+
+function updateWibTime() {
+  const now = new Date();
+  const timeText = new Intl.DateTimeFormat('id-ID', {
+    timeZone: 'Asia/Jakarta',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23'
+  }).format(now);
+  const shortTimeText = new Intl.DateTimeFormat('id-ID', {
+    timeZone: 'Asia/Jakarta',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23'
+  }).format(now);
+  const dateText = new Intl.DateTimeFormat('id-ID', {
+    timeZone: 'Asia/Jakarta',
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  }).format(now);
+
+  if (wibClock) {
+    wibClock.textContent = `${timeText} WIB`;
+    wibClock.dateTime = now.toISOString();
+  }
+  if (wibTime) wibTime.textContent = shortTimeText;
+  if (wibDate) wibDate.textContent = dateText;
+}
+
+updateWibTime();
+window.setInterval(updateWibTime, 1000);
+
+const desktopWindow = document.querySelector('.desktop-window');
+const desktopStage = document.querySelector('.desktop-stage');
+
+if (desktopWindow && desktopStage) {
+  const workstationApps = {
+    profile: {
+      label: 'PROFILE.EXE',
+      index: 'PROFILE / 001',
+      title: 'Ryan Nur Efendy',
+      subtitle: 'Network Operation Center',
+      description: 'NOC di Digital Nusantara yang berfokus pada monitoring bandwidth, perangkat jaringan, pelayanan pelanggan, troubleshooting, dan pengembangan sistem operasional.',
+      image: '',
+      tags: ['NOC', 'Monitoring', 'Troubleshooting', 'Digital Nusantara'],
+      href: '#tentang',
+      linkText: 'OPEN PROFILE'
+    },
+    grafana: {
+      label: 'GRAFANA.MONITOR',
+      index: 'PROJECT / 001',
+      title: 'Network Monitoring Dashboard',
+      subtitle: '11 Server Monitoring',
+      description: 'Dashboard Grafana untuk memantau traffic bandwidth MikroTik, CPU, RAM, storage, status port, serta kondisi sebelas server dalam satu pusat monitoring.',
+      image: 'grafana-dashboard.png',
+      tags: ['Grafana', 'Prometheus', 'Proxmox', 'MikroTik'],
+      href: '#project-grafana',
+      linkText: 'OPEN PROJECT'
+    },
+    absensi: {
+      label: 'ABSENSI.APP',
+      index: 'PROJECT / 002',
+      title: 'Web Absensi Karyawan',
+      subtitle: 'Attendance Management System',
+      description: 'Aplikasi absensi karyawan berbasis web server Ubuntu di Proxmox, dilengkapi akun karyawan dan admin, jadwal shift, selfie, lokasi GPS, serta pencatatan waktu server.',
+      image: 'web-absensi-admin.png',
+      tags: ['Ubuntu', 'Proxmox', 'MySQL', 'JavaScript'],
+      href: '#project-absensi',
+      linkText: 'OPEN PROJECT'
+    },
+    gudang: {
+      label: 'GUDANG_DNS.APP',
+      index: 'PROJECT / 003',
+      title: 'Gudang DNS',
+      subtitle: 'Inventory Management System',
+      description: 'Sistem inventori berbasis role untuk mengelola barang, stok, permintaan teknisi, persetujuan, gudang, dan penempatan tim lapangan.',
+      image: 'gudang-dns-admin.png',
+      tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Docker'],
+      href: '#project-gudang',
+      linkText: 'OPEN PROJECT'
+    },
+    topology: {
+      label: 'NETWORK.FLOW',
+      index: 'SYSTEM / 004',
+      title: 'Network Topology',
+      subtitle: 'Monitoring Data Flow',
+      description: 'Alur monitoring dimulai dari perangkat MikroTik, dikumpulkan melalui Prometheus, dijalankan pada lingkungan Proxmox, kemudian divisualisasikan melalui Grafana.',
+      image: '',
+      tags: ['MikroTik', 'Prometheus', 'Proxmox', 'Grafana'],
+      href: '#proyek',
+      linkText: 'VIEW WORKFLOW'
+    },
+    skills: {
+      label: 'STACK.TERMINAL',
+      index: 'SYSTEM / 005',
+      title: 'Skills & Technology',
+      subtitle: 'Network × Server × Web',
+      description: 'Daily stack untuk mengoperasikan jaringan dan membangun aplikasi: MikroTik, Winbox, OLT/OTB, PuTTY, Grafana, Prometheus, Proxmox, Ubuntu, Next.js, TypeScript, PostgreSQL, dan Docker.',
+      image: '',
+      tags: ['Network', 'Server', 'Frontend', 'Backend'],
+      href: '#pengalaman',
+      linkText: 'OPEN TECHNOLOGY'
+    },
+    contact: {
+      label: 'CONTACT.MAIL',
+      index: 'SYSTEM / 006',
+      title: 'Let’s Connect',
+      subtitle: 'Open for Collaboration',
+      description: 'Hubungi Ryan untuk berdiskusi mengenai network monitoring, operasional NOC, pengembangan dashboard, atau sistem internal berbasis web.',
+      image: '',
+      tags: ['Email', 'Collaboration', 'Indonesia'],
+      href: 'mailto:ryannur003@gmail.com',
+      linkText: 'SEND EMAIL'
+    }
+  };
+
+  const appButtons = [...document.querySelectorAll('[data-open-app], [data-dock-app]')];
+  const windowLabel = desktopWindow.querySelector('[data-window-label]');
+  const windowImage = desktopWindow.querySelector('[data-window-image]');
+  const windowPlaceholder = desktopWindow.querySelector('[data-window-placeholder]');
+  const windowIndex = desktopWindow.querySelector('[data-window-index]');
+  const windowTitle = desktopWindow.querySelector('[data-window-title]');
+  const windowSubtitle = desktopWindow.querySelector('[data-window-subtitle]');
+  const windowDescription = desktopWindow.querySelector('[data-window-description]');
+  const windowTags = desktopWindow.querySelector('[data-window-tags]');
+  const windowLink = desktopWindow.querySelector('[data-window-link]');
+  const windowHandle = desktopWindow.querySelector('[data-window-handle]');
+  const closeWindowButton = desktopWindow.querySelector('[data-window-action="close"]');
+  const minimizeWindowButton = desktopWindow.querySelector('[data-window-action="minimize"]');
+  const maximizeWindowButton = desktopWindow.querySelector('[data-window-action="maximize"]');
+  let activeApp = '';
+  let draggingWindow = false;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
+  appButtons.forEach((button) => {
+    button.setAttribute('aria-pressed', 'false');
+  });
+
+  function resetWindowPosition() {
+    desktopWindow.style.left = '';
+    desktopWindow.style.top = '';
+    desktopWindow.style.right = '';
+    desktopWindow.style.bottom = '';
+    desktopWindow.style.removeProperty('transform');
+  }
+
+  function setActiveApp(appName) {
+    appButtons.forEach((button) => {
+      const buttonApp = button.dataset.openApp || button.dataset.dockApp;
+      const isActive = buttonApp === appName;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+  }
+
+  function openWorkstationApp(appName) {
+    const app = workstationApps[appName];
+    if (!app) return;
+
+    activeApp = appName;
+    windowLabel.textContent = app.label;
+    windowIndex.textContent = app.index;
+    windowTitle.textContent = app.title;
+    windowSubtitle.textContent = app.subtitle;
+    windowDescription.textContent = app.description;
+    windowLink.href = app.href;
+    windowLink.firstChild.textContent = `${app.linkText} `;
+    windowTags.replaceChildren();
+
+    app.tags.forEach((tag) => {
+      const tagElement = document.createElement('span');
+      tagElement.textContent = tag;
+      windowTags.append(tagElement);
+    });
+
+    if (app.image) {
+      windowImage.src = app.image;
+      windowImage.alt = `Preview ${app.title}`;
+      windowImage.hidden = false;
+      windowPlaceholder.hidden = true;
+    } else {
+      windowImage.removeAttribute('src');
+      windowImage.alt = '';
+      windowImage.hidden = true;
+      windowPlaceholder.hidden = false;
+      windowPlaceholder.querySelector('span').textContent = appName === 'contact' ? '@' : 'RN';
+      windowPlaceholder.querySelector('small').textContent = app.label;
+    }
+
+    desktopWindow.classList.remove('minimized', 'maximized', 'dragging');
+    resetWindowPosition();
+    desktopWindow.classList.add('open');
+    desktopWindow.setAttribute('aria-hidden', 'false');
+    maximizeWindowButton.setAttribute('aria-label', 'Maximize window');
+    setActiveApp(appName);
+    closeWindowButton.focus({ preventScroll: true });
+  }
+
+  function closeWorkstationWindow() {
+    desktopWindow.classList.remove('open', 'minimized', 'maximized', 'dragging');
+    desktopWindow.setAttribute('aria-hidden', 'true');
+    resetWindowPosition();
+    setActiveApp('');
+    activeApp = '';
+  }
+
+  appButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const appName = button.dataset.openApp || button.dataset.dockApp;
+      openWorkstationApp(appName);
+    });
+  });
+
+  closeWindowButton.addEventListener('click', closeWorkstationWindow);
+
+  minimizeWindowButton.addEventListener('click', () => {
+    desktopWindow.classList.add('minimized');
+    desktopWindow.setAttribute('aria-hidden', 'true');
+  });
+
+  maximizeWindowButton.addEventListener('click', () => {
+    const isMaximized = desktopWindow.classList.toggle('maximized');
+    desktopWindow.classList.remove('minimized');
+    maximizeWindowButton.setAttribute('aria-label', isMaximized ? 'Restore window' : 'Maximize window');
+  });
+
+  windowLink.addEventListener('click', () => {
+    if (windowLink.getAttribute('href').startsWith('#')) {
+      closeWorkstationWindow();
+    }
+  });
+
+  windowHandle.addEventListener('pointerdown', (event) => {
+    if (!hasFinePointer || event.target.closest('button') || desktopWindow.classList.contains('maximized')) return;
+
+    const windowBounds = desktopWindow.getBoundingClientRect();
+    const stageBounds = desktopStage.getBoundingClientRect();
+    draggingWindow = true;
+    dragOffsetX = event.clientX - windowBounds.left;
+    dragOffsetY = event.clientY - windowBounds.top;
+    desktopWindow.style.left = `${windowBounds.left - stageBounds.left}px`;
+    desktopWindow.style.top = `${windowBounds.top - stageBounds.top}px`;
+    desktopWindow.style.transform = 'none';
+    desktopWindow.classList.add('dragging');
+    windowHandle.setPointerCapture(event.pointerId);
+  });
+
+  windowHandle.addEventListener('pointermove', (event) => {
+    if (!draggingWindow) return;
+
+    const stageBounds = desktopStage.getBoundingClientRect();
+    const windowBounds = desktopWindow.getBoundingClientRect();
+    const nextLeft = Math.min(
+      Math.max(event.clientX - stageBounds.left - dragOffsetX, 0),
+      Math.max(stageBounds.width - windowBounds.width, 0)
+    );
+    const nextTop = Math.min(
+      Math.max(event.clientY - stageBounds.top - dragOffsetY, 0),
+      Math.max(stageBounds.height - windowBounds.height, 0)
+    );
+
+    desktopWindow.style.left = `${nextLeft}px`;
+    desktopWindow.style.top = `${nextTop}px`;
+  });
+
+  function finishWindowDrag(event) {
+    if (!draggingWindow) return;
+    draggingWindow = false;
+    desktopWindow.classList.remove('dragging');
+    if (windowHandle.hasPointerCapture(event.pointerId)) {
+      windowHandle.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  windowHandle.addEventListener('pointerup', finishWindowDrag);
+  windowHandle.addEventListener('pointercancel', finishWindowDrag);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && desktopWindow.classList.contains('open')) {
+      closeWorkstationWindow();
+    }
+  });
+}
+
 if (!prefersReducedMotion && hasFinePointer) {
   let pointerFrame;
 

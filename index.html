@@ -13,7 +13,7 @@
       document.documentElement.dataset.theme = 'dark';
     }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260726-6">
+  <link rel="stylesheet" href="style.css?v=20260726-7">
 </head>
 <body>
   <div class="site-loader" role="status" aria-live="polite" aria-label="Memuat portofolio Ryan">
@@ -85,64 +85,150 @@
   </header>
 
   <main>
-    <section class="hero" id="beranda">
-      <div class="hero-copy reveal">
-        <p class="eyebrow"><span>01</span> NETWORK OPERATIONS</p>
-        <h1 aria-label="Menjaga jaringan tetap terhubung, server tetap terpantau, dan layanan tetap berjalan.">
-          Menjaga
-          <span class="type-line gradient-text" aria-hidden="true">
-            <span
-              data-text-type
-              data-text-values='["jaringan tetap terhubung.","server tetap terpantau.","layanan tetap berjalan."]'
-            >jaringan tetap terhubung.</span><span class="type-cursor">_</span>
-          </span>
-        </h1>
-        <p class="hero-intro">
-          Halo, saya <strong>Ryan Nur Efendy</strong>. Saat ini saya bekerja sebagai
-          Network Operation Center di perusahaan penyedia layanan internet Digital Nusantara.
-        </p>
-
-        <div class="hero-actions">
-          <a class="button primary" href="#proyek">Lihat proyek <span>↗</span></a>
-          <a class="button secondary" href="mailto:ryannur003@gmail.com">Hubungi saya</a>
+    <section class="hero desktop-hero" id="beranda">
+      <div class="noc-desktop reveal" aria-label="Ryan NOC interactive workstation">
+        <div class="desktop-topbar">
+          <div class="desktop-brand">
+            <span class="desktop-brand-mark">RN</span>
+            <strong>RYAN.NOC</strong>
+            <em>/ WORKSTATION</em>
+          </div>
+          <div class="desktop-session">
+            <span><i></i> PORTFOLIO OS</span>
+            <time data-wib-clock datetime="">00:00:00 WIB</time>
+          </div>
         </div>
 
-        <div class="mini-stats" aria-label="Ringkasan profil">
-          <div><strong>NOC</strong><span>Current Role</span></div>
-          <div><strong>24/7</strong><span>Monitoring Mindset</span></div>
-          <div><strong>∞</strong><span>Always Learning</span></div>
-        </div>
-      </div>
+        <div class="desktop-stage">
+          <div class="desktop-grid" aria-hidden="true"></div>
 
-      <div class="hero-console reveal" aria-label="Ringkasan sistem profil">
-        <div class="console-top">
-          <div class="console-title"><span class="pulse"></span> NOC_PROFILE.STATUS</div>
-          <div class="console-dots"><i></i><i></i><i></i></div>
-        </div>
-        <div class="console-body">
-          <div class="radar-wrap">
-            <div class="radar">
-              <div class="radar-sweep"></div>
-              <span class="node n1"></span><span class="node n2"></span>
-              <span class="node n3"></span><span class="node n4"></span>
-              <div class="radar-center">RN</div>
+          <div class="desktop-profile">
+            <p class="desktop-kicker"><span></span> ACTIVE WORKSTATION</p>
+            <h1 aria-label="Ryan Nur Efendy, Network Operation Center">
+              Ryan Nur Efendy
+              <span class="type-line gradient-text" aria-hidden="true">
+                <span
+                  data-text-type
+                  data-text-values='["Network Operation Center.","Network Monitoring.","Full-stack Systems."]'
+                >Network Operation Center.</span><span class="type-cursor">_</span>
+              </span>
+            </h1>
+            <p>Monitoring jaringan, mengelola server, dan membangun sistem operasional di Digital Nusantara.</p>
+            <div class="desktop-quick-actions">
+              <button type="button" data-open-app="profile">OPEN PROFILE</button>
+              <a href="#proyek">VIEW ALL PROJECTS <span>&#8599;</span></a>
             </div>
-            <p>NETWORK SCAN <strong>ACTIVE</strong></p>
           </div>
 
-          <div class="metrics">
-            <div class="metric"><span>ROLE</span><strong>Network Operation Center</strong></div>
-            <div class="metric"><span>COMPANY</span><strong>Digital Nusantara</strong></div>
-            <div class="metric"><span>LOCATION</span><strong>Indonesia</strong></div>
-            <div class="metric"><span>STATUS</span><strong class="online">● ONLINE</strong></div>
+          <div class="desktop-app-grid" aria-label="Aplikasi dan proyek Ryan">
+            <button class="desktop-app" type="button" data-open-app="grafana">
+              <span class="app-icon"><img src="https://api.iconify.design/logos:grafana.svg" alt=""></span>
+              <strong>GRAFANA</strong><small>Monitoring</small>
+            </button>
+            <button class="desktop-app" type="button" data-open-app="absensi">
+              <span class="app-icon"><img src="https://api.iconify.design/material-symbols:fact-check-outline.svg?color=%2339d9ff" alt=""></span>
+              <strong>ABSENSI</strong><small>Web App</small>
+            </button>
+            <button class="desktop-app" type="button" data-open-app="gudang">
+              <span class="app-icon"><img src="https://api.iconify.design/material-symbols:inventory-2-outline.svg?color=%236bea9a" alt=""></span>
+              <strong>GUDANG DNS</strong><small>Full-stack</small>
+            </button>
+            <button class="desktop-app" type="button" data-open-app="topology">
+              <span class="app-icon"><img src="https://api.iconify.design/material-symbols:hub-outline.svg?color=%237f75ff" alt=""></span>
+              <strong>TOPOLOGY</strong><small>Network Flow</small>
+            </button>
+            <button class="desktop-app" type="button" data-open-app="skills">
+              <span class="app-icon"><img src="https://api.iconify.design/material-symbols:terminal.svg?color=%2339d9ff" alt=""></span>
+              <strong>SKILLS</strong><small>Daily Stack</small>
+            </button>
+            <button class="desktop-app" type="button" data-open-app="contact">
+              <span class="app-icon"><img src="https://api.iconify.design/material-symbols:alternate-email.svg?color=%236bea9a" alt=""></span>
+              <strong>CONTACT</strong><small>Let's Connect</small>
+            </button>
           </div>
+
+          <div class="desktop-network-core" aria-label="Ilustrasi pusat jaringan">
+            <div class="core-orbit orbit-one"></div>
+            <div class="core-orbit orbit-two"></div>
+            <div class="core-orbit orbit-three"></div>
+            <span class="core-node node-a"></span>
+            <span class="core-node node-b"></span>
+            <span class="core-node node-c"></span>
+            <span class="core-node node-d"></span>
+            <div class="core-device">
+              <img src="https://api.iconify.design/material-symbols:router-outline-rounded.svg?color=%2339d9ff" alt="">
+              <strong>CORE</strong><small>CONNECTED</small>
+            </div>
+            <p>NETWORK CORE <span>ACTIVE</span></p>
+          </div>
+
+          <aside class="desktop-widgets" aria-label="Status NOC">
+            <article class="desktop-widget clock-widget">
+              <p>LOCAL TIME / JAKARTA</p>
+              <strong data-wib-time>00:00</strong>
+              <span data-wib-date>Loading date...</span>
+            </article>
+
+            <article class="desktop-widget status-widget">
+              <div class="widget-head"><span>SYSTEM STATUS</span><i></i></div>
+              <dl>
+                <div><dt>ROLE</dt><dd>NOC</dd></div>
+                <div><dt>SERVER</dt><dd>11 MONITORED</dd></div>
+                <div><dt>NETWORK</dt><dd class="status-online">STABLE</dd></div>
+                <div><dt>COMPANY</dt><dd>DIGITAL NUSANTARA</dd></div>
+              </dl>
+            </article>
+
+            <article class="desktop-widget traffic-widget">
+              <div class="widget-head"><span>BANDWIDTH TRAFFIC</span><small>SIMULATION</small></div>
+              <div class="desktop-traffic" aria-hidden="true">
+                <i style="--h:32%"></i><i style="--h:58%"></i><i style="--h:45%"></i>
+                <i style="--h:77%"></i><i style="--h:52%"></i><i style="--h:91%"></i>
+                <i style="--h:68%"></i><i style="--h:84%"></i><i style="--h:62%"></i>
+                <i style="--h:96%"></i><i style="--h:73%"></i><i style="--h:87%"></i>
+                <i style="--h:55%"></i><i style="--h:79%"></i><i style="--h:67%"></i>
+                <i style="--h:92%"></i>
+              </div>
+              <div class="traffic-legend"><span>RX 2.24 Gb/s</span><span>TX 1.68 Gb/s</span></div>
+            </article>
+          </aside>
+
+          <section class="desktop-window" role="dialog" aria-modal="false" aria-hidden="true" aria-labelledby="desktop-window-title">
+            <div class="window-titlebar" data-window-handle>
+              <div><span class="window-status-dot"></span><strong data-window-label>PROJECT.EXE</strong></div>
+              <div class="window-actions">
+                <button type="button" data-window-action="minimize" aria-label="Minimize window">&#8212;</button>
+                <button type="button" data-window-action="maximize" aria-label="Maximize window">&#9633;</button>
+                <button type="button" data-window-action="close" aria-label="Close window">&#215;</button>
+              </div>
+            </div>
+            <div class="window-body">
+              <div class="window-preview">
+                <img data-window-image alt="" hidden>
+                <div class="window-placeholder" data-window-placeholder>
+                  <span>RN</span><small>NOC WORKSTATION</small>
+                </div>
+              </div>
+              <div class="window-details">
+                <p data-window-index>APP / 001</p>
+                <h2 id="desktop-window-title" data-window-title>Project title</h2>
+                <span data-window-subtitle>Project category</span>
+                <p data-window-description>Project description</p>
+                <div class="window-tags" data-window-tags></div>
+                <a class="window-link" data-window-link href="#proyek">OPEN SECTION <span>&#8599;</span></a>
+              </div>
+            </div>
+          </section>
         </div>
-        <div class="traffic-bars" aria-hidden="true">
-          <i style="--h:35%"></i><i style="--h:58%"></i><i style="--h:42%"></i>
-          <i style="--h:78%"></i><i style="--h:64%"></i><i style="--h:91%"></i>
-          <i style="--h:72%"></i><i style="--h:86%"></i><i style="--h:56%"></i>
-          <i style="--h:68%"></i><i style="--h:95%"></i><i style="--h:82%"></i>
-        </div>
+
+        <nav class="desktop-dock" aria-label="Quick navigation">
+          <a href="#tentang"><img src="https://api.iconify.design/material-symbols:person-outline-rounded.svg?color=%2339d9ff" alt=""><span>ABOUT</span></a>
+          <a href="#pengalaman"><img src="https://api.iconify.design/material-symbols:monitoring-rounded.svg?color=%236bea9a" alt=""><span>EXPERIENCE</span></a>
+          <button type="button" data-dock-app="grafana"><img src="https://api.iconify.design/material-symbols:folder-open-outline-rounded.svg?color=%23ff9f43" alt=""><span>PROJECTS</span></button>
+          <a href="#beranda"><span class="dock-home">RN</span><span>HOME</span></a>
+          <button type="button" data-dock-app="skills"><img src="https://api.iconify.design/material-symbols:terminal-rounded.svg?color=%237f75ff" alt=""><span>STACK</span></button>
+          <a href="#kontak"><img src="https://api.iconify.design/material-symbols:alternate-email-rounded.svg?color=%2339d9ff" alt=""><span>CONTACT</span></a>
+        </nav>
       </div>
     </section>
 
@@ -393,7 +479,7 @@
         <h2>Proyek yang saya bangun.</h2>
       </div>
 
-      <article class="project-card reveal">
+      <article class="project-card reveal" id="project-grafana">
         <div class="project-visual">
           <img src="grafana-dashboard.png" alt="Dashboard Grafana buatan Ryan untuk memantau CPU, storage, RAM, port, dan traffic jaringan">
           <div class="image-status"><span></span> LIVE MONITORING UI</div>
@@ -434,7 +520,7 @@
         </div>
       </div>
 
-      <article class="project-card absensi-project reveal">
+      <article class="project-card absensi-project reveal" id="project-absensi">
         <div class="project-visual absensi-visual project-gallery card-swap-gallery" data-gallery>
           <figure class="gallery-image swap-card active">
             <figcaption><span>01</span><strong>Employee Login</strong><small>RYAN ABSENSI</small></figcaption>
@@ -472,7 +558,7 @@
         </div>
       </article>
 
-      <article class="project-card warehouse-project reveal">
+      <article class="project-card warehouse-project reveal" id="project-gudang">
         <div class="project-visual project-gallery card-swap-gallery" data-gallery>
           <figure class="gallery-image swap-card active">
             <figcaption><span>01</span><strong>Secure Login</strong><small>GUDANG DNS</small></figcaption>
@@ -579,6 +665,6 @@
   </footer>
 
   <div class="toast" role="status" aria-live="polite">Email berhasil disalin</div>
-  <script src="script.js?v=20260726-6"></script>
+  <script src="script.js?v=20260726-7"></script>
 </body>
 </html>
